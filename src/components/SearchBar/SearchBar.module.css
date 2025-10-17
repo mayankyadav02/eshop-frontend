@@ -1,0 +1,37 @@
+/* SearchBar.module.css */
+.searchForm {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.searchInput {
+  flex: 1;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-radius: 20px 0 0 20px;
+  outline: none;
+  min-width: 120px;
+}
+
+.searchButton {
+  padding: 6px 12px;
+  background: #333;
+  color: white;
+  border: none;
+  border-radius: 0 20px 20px 0;
+  cursor: pointer;
+}
+
+@media (max-width: 600px) {
+  .searchForm {
+    max-width: 200px;
+  }
+  .searchInput {
+    font-size: 0.8rem;
+    padding: 4px 8px;
+  }
+  .searchButton {
+    padding: 4px 8px;
+  }
+}
