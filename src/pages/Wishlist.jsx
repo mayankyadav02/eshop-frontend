@@ -1,13 +1,14 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchWishlist, removeFromWishlist, clearWishlist } from "../redux/slices/wishlistSlice.js";
-import { Box, Grid, Card, CardContent, CardMedia, Typography, Button, CircularProgress } from "@mui/material";
-import { useNavigate } from "react-router-dom";  // ✅ Add navigation
+import { Grid, Card, CardContent, CardMedia, Typography, Button, CircularProgress } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import getImageUrl from "../utils/getImageUrl.js";
+import "../style/wishlistPage.css"; // ✅ external CSS import
 
 export default function Wishlist() {
   const dispatch = useDispatch();
-  const navigate = useNavigate(); // ✅ navigation hook
+  const navigate = useNavigate();
   const { items, loading, error } = useSelector((state) => state.wishlist);
   const { items: products } = useSelector((state) => state.products);
 
@@ -25,73 +26,53 @@ export default function Wishlist() {
     dispatch(fetchWishlist());
   };
 
-  if (loading) return <CircularProgress sx={{ display: "block", margin: "2rem auto" }} />;
-  if (error) return <Typography color="error">{error}</Typography>;
+  if (loading) return <div className="wishlist-loading"><CircularProgress /></div>;
+  if (error) return <Typography className="wishlist-error">{error}</Typography>;
   if (!items || items.length === 0)
-    return <Typography align="center" sx={{ mt: 5 }}>Your wishlist is empty 💔</Typography>;
+    return <Typography className="wishlist-empty">Your wishlist is empty 💔</Typography>;
 
   return (
-    <Box sx={{ p: 3 }}>
-      <Typography variant="h4" gutterBottom>My Wishlist</Typography>
-      
-      <Button
-        variant="contained"
-        color="error"
-        sx={{ mb: 2 }}
-        onClick={handleClear}
-      >
-        Clear Wishlist
-      </Button>
+    <div className="wishlist-page">
+      {/* Header Row */}
+      <div className="wishlist-header">
+        <Typography variant="h4" className="wishlist-title">My Wishlist</Typography>
+        <Button className="wishlist-clear-btn" onClick={handleClear}>Clear Wishlist</Button>
+      </div>
 
-      <Grid container spacing={3}>
+      {/* Grid of Products */}
+      <Grid container spacing={3} className="wishlist-grid">
         {items.map((item) => {
           const product = products.find((p) => p._id === item._id);
-
           let imgUrl = "/placeholder.png";
-          if (product?.images?.length) {
-            imgUrl = getImageUrl(product.images);
-          }
+          if (product?.images?.length) imgUrl = getImageUrl(product.images);
 
           return (
-            <Grid item xs={12} md={6} lg={4} key={item._id}>
-              <Card>
-                {/* ✅ Card clickable for navigation */}
+            <Grid item xs={12} sm={6} md={6} lg={3} key={item._id}>
+              <Card className="wishlist-card">
                 <div 
-                  onClick={() => navigate(`/product/${item._id}`)} 
-                  style={{ cursor: "pointer" }}
+                  className="wishlist-card-img-wrapper"
+                  onClick={() => navigate(`/product/${item._id}`)}
                 >
                   <CardMedia
                     component="img"
-                    height="200"
                     image={imgUrl}
                     alt={item.name || "Wishlist Product"}
-                    sx={{ objectFit: "cover" }}
+                    className="wishlist-card-img"
                     onError={(e) => (e.target.src = "/placeholder.png")}
                   />
-                  <CardContent>
-                    <Typography variant="h6">{item.name}</Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      Price: ₹{item.price}
-                    </Typography>
+                  <CardContent className="wishlist-card-content">
+                    <Typography className="wishlist-card-title">{item.name}</Typography>
+                    <Typography className="wishlist-card-price">₹{item.price}</Typography>
                   </CardContent>
                 </div>
-
-                {/* Remove button as it is */}
                 <CardContent>
-                  <Button
-                    variant="outlined"
-                    color="error"
-                    sx={{ mt: 1 }}
-                    onClick={() => handleRemove(item._id)}
-                  >
-                    Remove
-                  </Button>
+                  <Button className="wishlist-remove-btn" onClick={() => handleRemove(item._id)}>Remove</Button>
                 </CardContent>
               </Card>
             </Grid>
           );
         })}
       </Grid>
-    </Box>
+    </div>
   );
 }

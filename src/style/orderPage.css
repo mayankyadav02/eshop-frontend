@@ -1,0 +1,126 @@
+/* ===================== Theme Variables ===================== */
+:root {
+  --bg-light: #f5f5f5;
+  --card-bg-light: #ffffff;
+  --text-light: #111;
+  --shadow-light: rgba(0,0,0,0.1);
+
+  --bg-dark: #121212;
+  --card-bg-dark: #1f1f1f;
+  --text-dark: #eee;
+  --shadow-dark: rgba(255,255,255,0.08);
+
+  --primary-color: #1976d2;
+  --primary-hover: #115293;
+  --secondary-color: #dc004e;
+  --border-radius: 14px;
+  --transition-speed: 0.3s ease;
+}
+
+/* ===================== Light/Dark Mode ===================== */
+body.light {
+  --bg-color: var(--bg-light);
+  --card-bg: var(--card-bg-light);
+  --text-color: var(--text-light);
+  --shadow-color: var(--shadow-light);
+}
+
+body.dark {
+  --bg-color: var(--bg-dark);
+  --card-bg: var(--card-bg-dark);
+  --text-color: var(--text-dark);
+  --shadow-color: var(--shadow-dark);
+}
+
+/* ===================== Page Container ===================== */
+.orders-page {
+  min-height: 100vh;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color var(--transition-speed), color var(--transition-speed);
+  padding: 2rem;
+}
+
+/* ===================== Page Title ===================== */
+.orders-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  color: var(--primary-color);
+  text-align: center;
+}
+
+/* ===================== Order Card ===================== */
+.order-card {
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  border-radius: var(--border-radius);
+  box-shadow: 0 4px 15px var(--shadow-color);
+  overflow: hidden;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  transition: all var(--transition-speed);
+}
+
+.order-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px var(--shadow-color);
+}
+
+/* ===================== Order Info ===================== */
+.order-card-content {
+  margin-bottom: 0.5rem;
+}
+
+.order-id {
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: var(--primary-color);
+}
+
+.order-details {
+  font-size: 0.95rem;
+  color: var(--text-color);
+}
+
+/* ===================== Button ===================== */
+.order-btn {
+  margin-top: 0.8rem;
+  padding: 10px 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: var(--border-radius);
+  border: 2px solid var(--primary-color);
+  background: transparent;
+  color: var(--primary-color);
+  cursor: pointer;
+  width: 100%;
+  transition: all var(--transition-speed);
+}
+
+.order-btn:hover {
+  background-color: var(--primary-color);
+  color: #fff;
+  transform: scale(1.03);
+}
+
+/* ===================== Divider ===================== */
+.order-divider {
+  margin: 0.5rem 0;
+  border-top: 1px solid var(--shadow-color);
+}
+
+/* ===================== Responsive ===================== */
+@media (max-width: 768px) {
+  .orders-page {
+    padding: 1rem;
+  }
+
+  .order-card {
+    padding: 0.8rem;
+  }
+
+  .order-btn {
+    font-size: 0.9rem;
+  }
+}

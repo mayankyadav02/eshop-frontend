@@ -27,8 +27,11 @@
 // src/api/axios.js
 import axios from "axios";
 
+// ✅ Base URL from environment variable
+const BASE_URL = import.meta.env.VITE_API_URL;
+
 const instance = axios.create({
-  baseURL: "http://localhost:5000",
+  baseURL: BASE_URL,
   withCredentials: true,
 });
 

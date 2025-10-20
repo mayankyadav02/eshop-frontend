@@ -1,0 +1,82 @@
+/* ===================== Admin Navbar ===================== */
+.admin-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+/* 🌞 Light Mode */
+.light-mode {
+  background-color: #ffffff;
+  color: #222;
+}
+
+/* 🌙 Dark Mode */
+.dark-mode {
+  background-color: #0d1117;
+  color: #f5f5f5;
+}
+
+.admin-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.admin-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Buttons */
+.logout-btn,
+.theme-toggle-btn {
+  border: none;
+  border-radius: 8px;
+  padding: 0.6rem 1.2rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.logout-btn {
+  background-color: #e63946;
+  color: white;
+}
+
+.logout-btn:hover {
+  background-color: #c72c39;
+  transform: translateY(-2px);
+}
+
+.theme-toggle-btn {
+  background-color: var(--primary-color, #007bff);
+  color: #fff;
+}
+
+.theme-toggle-btn:hover {
+  background-color: var(--primary-hover, #0056b3);
+  transform: scale(1.05);
+}
+
+/* 📱 Responsive */
+@media (max-width: 768px) {
+  .admin-navbar {
+    flex-direction: column;
+    gap: 0.8rem;
+    text-align: center;
+  }
+
+  .admin-actions {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}

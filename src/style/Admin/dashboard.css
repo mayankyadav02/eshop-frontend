@@ -1,0 +1,105 @@
+/* 🌟 DASHBOARD TABLE - Full Responsive & Theme Supported */
+
+/* Common base */
+.dashboard-table {
+  margin-top: 16px;
+  border-radius: 12px;
+  overflow: hidden;
+  width: 100%;
+  border-collapse: collapse;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Header cells */
+.dashboard-table thead tr th,
+.dashboard-table .MuiTableCell-head {
+  font-weight: 600 !important;
+  text-align: left;
+  padding: 12px 16px !important;
+  font-size: 15px;
+  text-transform: capitalize;
+  transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+/* Body cells */
+.dashboard-table tbody tr td,
+.dashboard-table .MuiTableCell-body {
+  padding: 10px 16px !important;
+  font-size: 14px !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+  transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+/* Hover */
+.dashboard-table tbody tr:hover {
+  transition: background-color 0.3s ease;
+}
+
+/* === 🌞 LIGHT MODE === */
+.dashboard-page.light .dashboard-table {
+  background-color: #ffffff;
+  color: #1a1a1a;
+}
+
+.dashboard-page.light .dashboard-table thead {
+  background-color: #f0f4fa;
+  color: #1a1a1a;
+}
+
+.dashboard-page.light .dashboard-table thead tr th,
+.dashboard-page.light .dashboard-table .MuiTableCell-head {
+  color: #1a1a1a !important;
+}
+
+.dashboard-page.light .dashboard-table tbody tr td,
+.dashboard-page.light .dashboard-table .MuiTableCell-body {
+  color: #2d2d2d !important;
+}
+
+.dashboard-page.light .dashboard-table tbody tr:hover {
+  background-color: #f7faff;
+}
+
+/* === 🌚 DARK MODE === */
+.dashboard-page.dark .dashboard-table {
+  background-color: #1b1b1b;
+  color: #e0e0e0;
+}
+
+.dashboard-page.dark .dashboard-table thead {
+  background-color: #252525;
+}
+
+.dashboard-page.dark .dashboard-table thead tr th,
+.dashboard-page.dark .dashboard-table .MuiTableCell-head {
+  color: #f0f0f0 !important;
+}
+
+.dashboard-page.dark .dashboard-table tbody tr td,
+.dashboard-page.dark .dashboard-table .MuiTableCell-body {
+  color: #d6d6d6 !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+.dashboard-page.dark .dashboard-table tbody tr:hover {
+  background-color: #2a2a2a;
+}
+
+/* Paper override */
+.dashboard-page.light .MuiPaper-root {
+  background-color: #fff !important;
+  color: #1a1a1a !important;
+  box-shadow: none !important;
+}
+
+.dashboard-page.dark .MuiPaper-root {
+  background-color: #1e1e1e !important;
+  color: #f0f0f0 !important;
+  box-shadow: none !important;
+}
+
+/* Smooth transitions for all */
+.MuiTableCell-root,
+.MuiPaper-root {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}

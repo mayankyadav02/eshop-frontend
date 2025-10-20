@@ -1,0 +1,91 @@
+/* ==========================
+   🌞 Light Mode
+========================== */
+.admin-users-page.light {
+  background-color: #f8f9fa;
+  color: #212121;
+  min-height: 100vh;
+  padding: 2rem;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.admin-users-page.light .page-title {
+  color: #111;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.admin-users-page.light .MuiPaper-root {
+  background-color: #ffffff !important;
+  color: #212121 !important;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.admin-users-page.light .MuiTableCell-root {
+  border-bottom: 1px solid #ddd !important;
+  color: #212121 !important;
+  font-weight: 500;
+}
+
+.admin-users-page.light .MuiTableHead-root {
+  background-color: #f1f3f4;
+}
+
+.admin-users-page.light .MuiIconButton-root:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* ==========================
+   🌙 Dark Mode
+========================== */
+.admin-users-page.dark {
+  background-color: #121212;
+  color: #e0e0e0;
+  min-height: 100vh;
+  padding: 2rem;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.admin-users-page.dark .page-title {
+  color: #f5f5f5;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.admin-users-page.dark .MuiPaper-root {
+  background-color: #1e1e1e !important;
+  color: #f0f0f0 !important;
+  box-shadow: 0px 2px 10px rgba(255, 255, 255, 0.05);
+}
+
+.admin-users-page.dark .MuiTableCell-root {
+  border-bottom: 1px solid #333 !important;
+  color: #e0e0e0 !important;
+  font-weight: 500;
+}
+
+.admin-users-page.dark .MuiTableHead-root {
+  background-color: #2a2a2a;
+}
+
+.admin-users-page.dark .MuiIconButton-root:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* ==========================
+   📱 Responsive Design
+========================== */
+@media (max-width: 768px) {
+  .admin-users-page {
+    padding: 1rem;
+  }
+
+  .page-title {
+    font-size: 1.2rem;
+  }
+
+  .MuiTableCell-root {
+    font-size: 0.9rem;
+    padding: 6px !important;
+  }
+}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import {
   Box,
   Button,
@@ -20,15 +20,18 @@ import {
 } from "@mui/material";
 import axios from "../../api/axios";
 import useAuth from "../../hooks/useAuth";
+import { ThemeContext } from "../../context/ThemeContext";
+import "../../style/Admin/product.css"; 
 
 export default function AdminProducts() {
+  const { theme } = useContext(ThemeContext); // ✅ Theme context use
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [open, setOpen] = useState(false);
   const [editProduct, setEditProduct] = useState(null);
   const [formData, setFormData] = useState({
     name: "",
-    retail_price: "",
+    price: "",
     stock: "",
     category: "",
     description: "",
@@ -37,26 +40,23 @@ export default function AdminProducts() {
 
   const { token } = useAuth();
 
-  // Pagination state
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [totalProducts, setTotalProducts] = useState(0);
 
-  // Fetch Products with pagination
-const fetchProducts = async () => {
-  try {
-    const res = await axios.get(
-      `/api/admin/products?limit=${rowsPerPage}&skip=${page * rowsPerPage}`,
-      { headers: { Authorization: `Bearer ${token}` } }
-    );
-    // const data = await res.json();
-    // console.log("API Response:", data);
-    setProducts(res.data.products || []);
-    setTotalProducts(res.data.total || 0);
-  } catch (err) {
-    console.error("Products fetch error:", err);
-  }
-};
+  // ✅ Fetch functions same as before...
+  const fetchProducts = async () => {
+    try {
+      const res = await axios.get(
+        `/api/admin/products?limit=${rowsPerPage}&skip=${page * rowsPerPage}`,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      setProducts(res.data.products || []);
+      setTotalProducts(res.data.total || 0);
+    } catch (err) {
+      console.error("Products fetch error:", err);
+    }
+  };
 
   const fetchCategories = async () => {
     try {
@@ -69,21 +69,15 @@ const fetchProducts = async () => {
     }
   };
 
-useEffect(() => {
-  if (token) {
-    fetchProducts();
-  }
-}, [token, page, rowsPerPage]);  // sirf products ke liye
+  useEffect(() => {
+    if (token) fetchProducts();
+  }, [token, page, rowsPerPage]);
 
-useEffect(() => {
-  if (token) {
-    fetchCategories();
-  }
-}, [token]);  // categories ek hi baar
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
+  useEffect(() => {
+    if (token) fetchCategories();
+  }, [token]);
 
+  const handleChangePage = (event, newPage) => setPage(newPage);
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
@@ -167,17 +161,18 @@ useEffect(() => {
   };
 
   return (
-    <Box>
-      <Typography variant="h5" gutterBottom>
+    <Box className={`admin-products-page ${theme}`}>
+      <Typography variant="h5" gutterBottom className="page-title">
         Manage Products
       </Typography>
-      <Button variant="contained" color="primary" onClick={() => handleOpen()} sx={{ mb: 2 }}>
-        Add Product
+
+      <Button variant="contained" color="primary" onClick={() => handleOpen()} className="add-btn">
+        + Add Product
       </Button>
 
-      <TableContainer component={Paper}>
+      <TableContainer component={Paper} className="admin-table">
         <Table>
-          <TableHead sx={{ background: "#f0f0f0" }}>
+          <TableHead>
             <TableRow>
               <TableCell>Image</TableCell>
               <TableCell>Name</TableCell>
@@ -187,58 +182,55 @@ useEffect(() => {
               <TableCell>Actions</TableCell>
             </TableRow>
           </TableHead>
-<TableBody>
-            {products?.map((p) => (
-    <TableRow key={p._id}>
-      <TableCell>
-        <img
-          src={p.imageUrl ? `http://localhost:5000${p.imageUrl}` : "placeholder.png"}
-          alt={p.name}
-          width="60"
-          style={{ borderRadius: "6px" }}
-          loading="lazy"
-        />
-      </TableCell>
-      <TableCell>{p.name}</TableCell>
-      {/* ✅ price ko retail_price se fix kiya */}
-      <TableCell>₹{p.retail_price || p.price || 0}</TableCell>
-      <TableCell>
-        <TextField
-          type="number"
-          value={p.stock}
-          onChange={(e) => handleStockUpdate(p._id, e.target.value)}
-          size="small"
-          style={{ width: "80px" }}
-        />
-      </TableCell>
-      <TableCell>
-        <TextField
-          select
-          value={p.category?._id || ""}
-          onChange={(e) => handleCategoryChange(p._id, e.target.value)}
-          size="small"
-          style={{ minWidth: "120px" }}
-        >
-          {categories.map((c) => (
-            <MenuItem key={c._id} value={c._id}>
-              {c.name}
-            </MenuItem>
-          ))}
-        </TextField>
-      </TableCell>
-      <TableCell>
-        <Button size="small" onClick={() => handleOpen(p)}>Edit</Button>
-        <Button size="small" color="error" onClick={() => handleDelete(p._id)}>Delete</Button>
-      </TableCell>
-    </TableRow>
-  ))}
-</TableBody>
+          <TableBody>
+            {products.map((p) => (
+              <TableRow key={p._id}>
+                <TableCell>
+                  <img
+                    src={p.imageUrl ? `http://localhost:5000${p.imageUrl}` : "/placeholder.png"}
+                    alt={p.name}
+                    className="product-img"
+                  />
+                </TableCell>
+                <TableCell>{p.name}</TableCell>
+                <TableCell>₹{p.retail_price || 0}</TableCell>
+                <TableCell>
+                  <TextField
+                    type="number"
+                    value={p.stock}
+                    onChange={(e) => handleStockUpdate(p._id, e.target.value)}
+                    size="small"
+                    className="stock-input"
+                  />
+                </TableCell>
+                <TableCell>
+                  <TextField
+                    select
+                    value={p.category?._id || ""}
+                    onChange={(e) => handleCategoryChange(p._id, e.target.value)}
+                    size="small"
+                    className="category-select"
+                  >
+                    {categories.map((c) => (
+                      <MenuItem key={c._id} value={c._id}>
+                        {c.name}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                </TableCell>
+                <TableCell>
+                  <Button size="small" onClick={() => handleOpen(p)}>Edit</Button>
+                  <Button size="small" color="error" onClick={() => handleDelete(p._id)}>Delete</Button>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
         </Table>
       </TableContainer>
 
       <TablePagination
         component="div"
-        count={totalProducts || 0}
+        count={totalProducts}
         page={page}
         onPageChange={handleChangePage}
         rowsPerPage={rowsPerPage}
@@ -246,68 +238,28 @@ useEffect(() => {
         rowsPerPageOptions={[10, 20, 50]}
       />
 
-      {/* Add/Edit Dialog */}
-      <Dialog open={open} onClose={() => setOpen(false)} fullWidth maxWidth="sm">
+      <Dialog open={open} onClose={() => setOpen(false)} fullWidth maxWidth="sm" className={`dialog-box ${theme}`}>
         <DialogTitle>{editProduct ? "Edit Product" : "Add Product"}</DialogTitle>
         <DialogContent>
-          <TextField
-            label="Name"
-            fullWidth
-            margin="normal"
-            value={formData.name}
-            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-          />
-          <TextField
-            label="Price"
-            type="number"
-            fullWidth
-            margin="normal"
-            value={formData.price}
-            onChange={(e) => setFormData({ ...formData, price: e.target.value })}
-          />
-          <TextField
-            label="Stock"
-            type="number"
-            fullWidth
-            margin="normal"
-            value={formData.stock}
-            onChange={(e) => setFormData({ ...formData, stock: e.target.value })}
-          />
-          <TextField
-            select
-            label="Category"
-            fullWidth
-            margin="normal"
-            value={formData.category}
-            onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-          >
+          <TextField label="Name" fullWidth margin="normal" value={formData.name}
+            onChange={(e) => setFormData({ ...formData, name: e.target.value })} />
+          <TextField label="Price" type="number" fullWidth margin="normal" value={formData.price}
+            onChange={(e) => setFormData({ ...formData, price: e.target.value })} />
+          <TextField label="Stock" type="number" fullWidth margin="normal" value={formData.stock}
+            onChange={(e) => setFormData({ ...formData, stock: e.target.value })} />
+          <TextField select label="Category" fullWidth margin="normal" value={formData.category}
+            onChange={(e) => setFormData({ ...formData, category: e.target.value })}>
             {categories.map((c) => (
-              <MenuItem key={c._id} value={c._id}>
-                {c.name}
-              </MenuItem>
+              <MenuItem key={c._id} value={c._id}>{c.name}</MenuItem>
             ))}
           </TextField>
-          <TextField
-            label="Description"
-            fullWidth
-            multiline
-            rows={3}
-            margin="normal"
-            value={formData.description}
-            onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-          />
-          <input
-            type="file"
-            accept="image/*"
-            onChange={(e) => setImage(e.target.files[0])}
-            style={{ marginTop: "1rem" }}
-          />
+          <TextField label="Description" fullWidth multiline rows={3} margin="normal"
+            value={formData.description} onChange={(e) => setFormData({ ...formData, description: e.target.value })} />
+          <input type="file" accept="image/*" onChange={(e) => setImage(e.target.files[0])} className="upload-input" />
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setOpen(false)}>Cancel</Button>
-          <Button onClick={handleSave} variant="contained" color="primary">
-            Save
-          </Button>
+          <Button variant="contained" color="primary" onClick={handleSave}>Save</Button>
         </DialogActions>
       </Dialog>
     </Box>

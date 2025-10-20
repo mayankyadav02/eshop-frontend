@@ -1,0 +1,92 @@
+/* ===================== Admin Sidebar ===================== */
+.admin-sidebar {
+  width: 250px;
+  min-height: 100vh;
+  padding: 2rem 1rem;
+  transition: all 0.3s ease;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.08);
+  position: sticky;
+  top: 0;
+}
+
+/* 🌞 Light Mode */
+.light-mode {
+  background-color: #ffffff;
+  color: #222;
+}
+
+/* 🌙 Dark Mode */
+.dark-mode {
+  background-color: #0d1117;
+  color: #f5f5f5;
+}
+
+/* Title */
+.sidebar-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  letter-spacing: 0.5px;
+  color: var(--primary-color, #007bff);
+}
+
+/* Links */
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.sidebar-link {
+  display: block;
+  padding: 0.7rem 1rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.3s ease;
+}
+
+.sidebar-link:hover {
+  background-color: rgba(0, 123, 255, 0.1);
+  color: var(--primary-color, #007bff);
+  transform: translateX(5px);
+}
+
+.sidebar-link.active {
+  background-color: var(--primary-color, #007bff);
+  color: #fff;
+  font-weight: 600;
+}
+
+/* 📱 Responsive */
+@media (max-width: 992px) {
+  .admin-sidebar {
+    width: 220px;
+    padding: 1.5rem 0.8rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .admin-sidebar {
+    width: 100%;
+    position: relative;
+    box-shadow: none;
+    min-height: auto;
+    text-align: center;
+    padding: 1rem;
+  }
+
+  .sidebar-nav {
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .sidebar-link {
+    margin: 0.3rem;
+    flex: 1 1 auto;
+  }
+}

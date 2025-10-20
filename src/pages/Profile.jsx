@@ -1,9 +1,9 @@
 // src/pages/Profile.jsx
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import axios from "../api/axios.js"; // apna axios instance
-import { Box, Typography, TextField, Button, CircularProgress } from "@mui/material";
-import { updateProfile } from "../redux/slices/authSlice.js"; // optional: redux me auth update
+import axios from "../api/axios.js";
+import { updateProfile } from "../redux/slices/authSlice.js";
+import "../style/profilePage.css"; // ✅ external css added
 
 export default function Profile() {
   const { userInfo } = useSelector((state) => state.auth);
@@ -17,16 +17,15 @@ export default function Profile() {
   const [errorMsg, setErrorMsg] = useState("");
 
   useEffect(() => {
-    // ensure state updates if userInfo changes
     setName(userInfo?.name || "");
     setEmail(userInfo?.email || "");
   }, [userInfo]);
 
   if (!userInfo) {
     return (
-      <Box sx={{ p: 3 }}>
-        <Typography color="error">User not found ❌</Typography>
-      </Box>
+      <div className="profile-container">
+        <p className="error-text">User not found ❌</p>
+      </div>
     );
   }
 
@@ -36,12 +35,9 @@ export default function Profile() {
     setErrorMsg("");
 
     try {
-      // ✅ call backend route correctly
       const { data } = await axios.put("/api/users/profile", { name, email });
       setSuccessMsg("Profile updated successfully ✅");
       setEditMode(false);
-
-      // Optional: update redux auth state
       dispatch(updateProfile(data));
     } catch (err) {
       setErrorMsg(err.response?.data?.message || "Failed to update profile ❌");
@@ -51,73 +47,60 @@ export default function Profile() {
   };
 
   return (
-    <Box sx={{ p: 3, maxWidth: 500 }}>
-      <Typography variant="h4" gutterBottom>
-        {userInfo.name}'s Profile
-      </Typography>
+    <div className="profile-container">
+      <h2 className="profile-title">{userInfo.name}'s Profile</h2>
 
       {!editMode ? (
         <>
-          <Typography variant="body1"><strong>Email:</strong> {userInfo.email}</Typography>
-          <Typography variant="body1"><strong>Role:</strong> {userInfo.role}</Typography>
-          <Typography variant="body1"><strong>User ID:</strong> {userInfo._id}</Typography>
+          <p className="profile-info"><strong>Email:</strong> {userInfo.email}</p>
+          <p className="profile-info"><strong>Role:</strong> {userInfo.role}</p>
+          <p className="profile-info"><strong>User ID:</strong> {userInfo._id}</p>
 
-          <Button
-            variant="contained"
-            color="primary"
-            sx={{ mt: 2 }}
-            onClick={() => setEditMode(true)}
-          >
+          <button className="btn-primary" onClick={() => setEditMode(true)}>
             Edit Profile
-          </Button>
+          </button>
         </>
       ) : (
         <>
-          <TextField
-            label="Name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            fullWidth
-            sx={{ mb: 2 }}
-          />
-          <TextField
-            label="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            fullWidth
-            sx={{ mb: 2 }}
-          />
+          <div className="form-group">
+            <label>Name</label>
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </div>
 
-          <Button
-            variant="contained"
-            color="primary"
-            sx={{ mr: 2 }}
-            onClick={handleUpdate}
-            disabled={loading}
-          >
-            {loading ? <CircularProgress size={24} /> : "Save Changes"}
-          </Button>
-          <Button
-            variant="outlined"
-            color="secondary"
-            onClick={() => setEditMode(false)}
-            disabled={loading}
-          >
-            Cancel
-          </Button>
+          <div className="form-group">
+            <label>Email</label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
 
-          {successMsg && (
-            <Typography color="success.main" sx={{ mt: 2 }}>
-              {successMsg}
-            </Typography>
-          )}
-          {errorMsg && (
-            <Typography color="error" sx={{ mt: 2 }}>
-              {errorMsg}
-            </Typography>
-          )}
+          <div className="button-group">
+            <button
+              className="btn-primary"
+              onClick={handleUpdate}
+              disabled={loading}
+            >
+              {loading ? "Saving..." : "Save Changes"}
+            </button>
+            <button
+              className="btn-secondary"
+              onClick={() => setEditMode(false)}
+              disabled={loading}
+            >
+              Cancel
+            </button>
+          </div>
+
+          {successMsg && <p className="success-text">{successMsg}</p>}
+          {errorMsg && <p className="error-text">{errorMsg}</p>}
         </>
       )}
-    </Box>
+    </div>
   );
 }

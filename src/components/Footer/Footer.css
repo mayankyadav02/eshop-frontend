@@ -1,0 +1,81 @@
+/* ===================== FOOTER ===================== */
+.footer-container {
+  padding: 3rem 1rem 1.5rem;
+  transition: all 0.3s ease;
+}
+
+/* 🌞 Light Mode */
+.light-mode {
+  background-color: #f9fafb;
+  color: #222;
+}
+
+/* 🌙 Dark Mode */
+.dark-mode {
+  background-color: #0d1117;
+  color: #e0e0e0;
+}
+
+/* Titles */
+.footer-title {
+  font-weight: 700;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  color: var(--primary-color);
+}
+
+/* Links */
+.footer-link {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.footer-link:hover {
+  color: var(--primary-hover);
+  transform: translateX(4px);
+}
+
+/* Text */
+.footer-text {
+  color: inherit;
+  opacity: 0.9;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+/* Divider */
+.footer-divider {
+  margin: 2rem 0;
+  background-color: rgba(128, 128, 128, 0.3);
+  height: 1px;
+  border: none;
+}
+
+/* Bottom */
+.footer-bottom {
+  font-size: 0.85rem;
+  opacity: 0.8;
+}
+
+/* 📱 Responsive Design */
+@media (max-width: 768px) {
+  .footer-container {
+    text-align: center;
+  }
+
+  .footer-title {
+    font-size: 1rem;
+  }
+
+  .footer-link {
+    font-size: 0.9rem;
+  }
+
+  .footer-text {
+    font-size: 0.85rem;
+  }
+}

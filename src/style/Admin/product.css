@@ -1,0 +1,189 @@
+/* 🌗 Common Layout */
+.admin-products-page {
+  padding: 20px;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.page-title {
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+/* 🌞 Light Mode */
+.admin-products-page.light {
+  background-color: #fafafa;
+  color: #111;
+}
+
+/* 🌙 Dark Mode */
+.admin-products-page.dark {
+  background-color: #121212;
+  color: #eee;
+}
+
+/* Table */
+.admin-table {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.admin-table table {
+  width: 100%;
+}
+
+.admin-table th,
+.admin-table td {
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* Table theme styles */
+.admin-products-page.light .admin-table th {
+  background-color: #f0f0f0;
+  color: #222;
+}
+
+.admin-products-page.dark .admin-table th {
+  background-color: #1e1e1e;
+  color: #fff;
+}
+
+.admin-products-page.light .admin-table td {
+  background-color: #fff;
+  color: #333;
+}
+
+.admin-products-page.dark .admin-table td {
+  background-color: #181818;
+  color: #eee;
+}
+
+/* Product Image */
+.product-img {
+  width: 60px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+/* Buttons */
+.add-btn {
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+.dialog-box.light {
+  background-color: #fff;
+  color: #111;
+}
+
+.dialog-box.dark {
+  background-color: #1c1c1c;
+  color: #eee;
+}
+
+.upload-input {
+  margin-top: 12px;
+}
+
+/* Text fields */
+.MuiTextField-root {
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.admin-products-page.dark .MuiTextField-root input,
+.admin-products-page.dark .MuiTextField-root textarea {
+  color: #fff;
+}
+
+.admin-products-page.dark .MuiInputBase-root {
+  background: #2a2a2a;
+}
+
+
+
+/* ------------------ CATEGORY DROPDOWN ------------------ */
+/* Dark mode select input text */
+.admin-products-page.dark .category-select .MuiSelect-select,
+.admin-products-page.dark .MuiMenuItem-root {
+  color: #fff; /* Light text for dark mode */
+  background-color: #2a2a2a; /* Background for dark mode */
+}
+
+/* Light mode fallback (optional) */
+.admin-products-page.light .category-select .MuiSelect-select,
+.admin-products-page.light .MuiMenuItem-root {
+  color: #111;
+  background-color: #fff;
+}
+
+/* ------------------ ADD/EDIT PRODUCT DIALOG ------------------ */
+/* Dialog background & text */
+.admin-products-page.dark .dialog-box.MuiPaper-root {
+  background-color: #1c1c1c !important; /* Dialog background */
+  color: #eee !important; /* Dialog text */
+}
+
+/* Text fields inside dialog */
+.admin-products-page.dark .dialog-box .MuiInputBase-root {
+  background-color: #2a2a2a !important;
+  color: #fff !important;
+}
+
+.admin-products-page.dark .dialog-box .MuiInputBase-input,
+.admin-products-page.dark .dialog-box textarea {
+  color: #fff !important;
+}
+
+/* Menu items inside dialog select */
+.admin-products-page.dark .dialog-box .MuiMenuItem-root {
+  background-color: #2a2a2a;
+  color: #fff;
+}
+
+/* Add a small hover fix for menu items */
+.admin-products-page.dark .dialog-box .MuiMenuItem-root:hover {
+  background-color: #3a3a3a;
+}
+
+/* ------------------ DIALOG LIGHT/DARK FIX ------------------ */
+
+/* Dialog paper background & text */
+.admin-products-page.dark .dialog-box.MuiPaper-root {
+  background-color: #1c1c1c !important; /* dark bg */
+  color: #eee !important; /* text color */
+}
+
+/* Dialog title */
+.admin-products-page.dark .dialog-box .MuiDialogTitle-root {
+  color: #fff;
+}
+
+/* TextFields inside dialog */
+.admin-products-page.dark .dialog-box .MuiInputBase-root {
+  background-color: #2a2a2a !important; /* field bg */
+  color: #fff !important; /* input text */
+}
+
+.admin-products-page.dark .dialog-box .MuiInputBase-input,
+.admin-products-page.dark .dialog-box textarea {
+  color: #fff !important; /* text inside input/textarea */
+}
+
+/* Label color */
+.admin-products-page.dark .dialog-box .MuiFormLabel-root {
+  color: #ccc !important;
+}
+
+/* Select dropdown items */
+.admin-products-page.dark .dialog-box .MuiMenuItem-root {
+  background-color: #2a2a2a;
+  color: #fff;
+}
+
+.admin-products-page.dark .dialog-box .MuiMenuItem-root:hover {
+  background-color: #3a3a3a;
+}
+
+/* Upload input text */
+.admin-products-page.dark .dialog-box .upload-input {
+  color: #fff;
+}

@@ -2,14 +2,8 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "../redux/slices/authSlice";
 import { useNavigate } from "react-router-dom";
-import {
-  Container,
-  TextField,
-  Button,
-  Typography,
-  Box,
-  Alert,
-} from "@mui/material";
+import { Container, TextField, Button, Typography, Alert, Box } from "@mui/material";
+import "../style/authForm.css";
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -17,7 +11,6 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   const { loading, error } = useSelector((state) => state.auth);
 
   const handleSubmit = (e) => {
@@ -28,61 +21,50 @@ const Register = () => {
   };
 
   return (
-    <Container maxWidth="xs">
-      <Box sx={{ mt: 8, p: 4, boxShadow: 3, borderRadius: 2 }}>
-        <Typography variant="h5" align="center" gutterBottom>
-          Register
-        </Typography>
-
+    <div className="auth-page">
+      <Box className="auth-card">
+        <Typography className="auth-title" variant="h5" align="center" gutterBottom >Register</Typography>
         {error && <Alert severity="error">{error}</Alert>}
-
         <form onSubmit={handleSubmit}>
-          <TextField
-            fullWidth
-            margin="normal"
-            label="Name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-          />
-
-          <TextField
-            fullWidth
-            margin="normal"
-            label="Email"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-
-          <TextField
-            fullWidth
-            margin="normal"
-            label="Password"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-
-          <Button
-            fullWidth
-            type="submit"
-            variant="contained"
-            sx={{ mt: 2 }}
-            disabled={loading}
-          >
+          <div className="auth-input">
+            <TextField
+              label="Name"
+              fullWidth
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
+          </div>
+          <div className="auth-input">
+            <TextField
+              label="Email"
+              type="email"
+              fullWidth
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+          <div className="auth-input">
+            <TextField
+              label="Password"
+              type="password"
+              fullWidth
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+          <Button className="auth-btn" type="submit" disabled={loading}>
             {loading ? "Registering..." : "Register"}
           </Button>
         </form>
-
-        <Typography sx={{ mt: 2 }} align="center">
+        <Typography className="auth-footer">
           Already have an account?{" "}
-          <Button onClick={() => navigate("/login")}>Login</Button>
+          <button onClick={() => navigate("/login")}>Login</button>
         </Typography>
       </Box>
-    </Container>
+    </div>
   );
 };
 

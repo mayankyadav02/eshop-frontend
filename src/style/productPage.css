@@ -1,0 +1,250 @@
+/* ------------------- Light / Dark Mode Variables ------------------- */
+:root {
+  --bg-light: #fafafa;
+  --bg-dark: #1e1e1e;
+  --text-light: #333;
+  --text-dark: #eee;
+  --card-bg-light: #fff;
+  --card-bg-dark: #2a2a2a;
+  --primary-color: #1976d2;
+  --secondary-color: #dc004e;
+  --hover-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+  --border-radius: 12px;
+  --transition-speed: 0.3s ease;
+}
+
+body.light {
+  --bg-color: var(--bg-light);
+  --text-color: var(--text-light);
+  --card-bg: var(--card-bg-light);
+}
+
+body.dark {
+  --bg-color: var(--bg-dark);
+  --text-color: var(--text-dark);
+  --card-bg: var(--card-bg-dark);
+}
+
+/* ------------------- Container ------------------- */
+.product-page .products-container {
+  padding: 1.5rem 2rem;
+  background-color: var(--bg-color);
+  border-radius: var(--border-radius);
+  min-height: 100vh;
+  color: var(--text-color);
+}
+
+.product-page h4,
+.product-page .product-summary {
+  color: #666;
+  margin-bottom: 0.1rem;
+  margin-top: 0.5rem;
+  text-align: center;
+}
+
+.product-page .products-container > .filters-container {
+  margin-top: 1.5rem;  
+  margin-bottom: 2rem;
+}
+
+/* ------------------- Filters ------------------- */
+.product-page .filters-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+  margin-bottom: 2rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.product-page .filter-item {
+  background-color: var(--card-bg) !important;
+  color: var(--text-color) !important;
+  border-radius: var(--border-radius) !important;
+  transition: all 0.2s ease;
+}
+
+/* Select Input */
+.product-page .filter-item .MuiInputLabel-root {
+  color: var(--text-color) !important;
+}
+
+.product-page .filter-item .MuiSelect-select {
+  background-color: var(--card-bg) !important;
+  color: var(--text-color) !important;
+  border-radius: var(--border-radius) !important;
+  padding: 0.5rem 0.6rem;
+  font-size: 0.95rem;
+}
+
+.product-page .filter-item .MuiSelect-icon {
+  color: var(--text-color) !important;
+}
+
+.product-page .filter-item .MuiOutlinedInput-notchedOutline {
+  border-color: #ccc;
+}
+
+.product-page .filter-item:hover .MuiOutlinedInput-notchedOutline,
+.product-page .filter-item .Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: var(--primary-color);
+}
+
+/* .product-page .filter-item .MuiPaper-root {
+  background-color: var(--card-bg) !important;
+  color: var(--text-color) !important;
+}
+
+.product-page .filter-item .MuiMenuItem-root {
+  color: var(--text-color) !important;
+  transition: background 0.2s ease;
+}
+
+.product-page .filter-item .MuiMenuItem-root:hover {
+  background-color: rgba(25, 118, 210, 0.1);
+} */
+
+/* ------------------- Dropdown Menu (Global Fix) ------------------- */
+/* Yeh part sabse important hai — yeh dropdown menu ko light/dark ke hisaab se color deta hai */
+
+body.dark .MuiPaper-root.MuiPopover-paper {
+  background-color: var(--card-bg-dark) !important;
+  color: var(--text-dark) !important;
+}
+
+body.light .MuiPaper-root.MuiPopover-paper {
+  background-color: var(--card-bg-light) !important;
+  color: var(--text-light) !important;
+}
+
+/* Dropdown items */
+body.dark .MuiMenuItem-root {
+  color: var(--text-dark) !important;
+}
+
+body.light .MuiMenuItem-root {
+  color: var(--text-light) !important;
+}
+
+/* Hover effect */
+.MuiMenuItem-root:hover {
+  background-color: rgba(25, 118, 210, 0.15) !important;
+  transition: background 0.2s ease;
+}
+
+/* ------------------- Product Grid ------------------- */
+.product-page .product-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); ;
+  gap: 1.5rem;
+  justify-items: center;
+  margin-top: 1rem;
+}
+
+/* ------------------- Responsive Fixes ------------------- */
+@media (max-width: 1200px) {
+  .product-page .product-grid { grid-template-columns: repeat(4, 1fr); }
+}
+
+@media (max-width: 992px) {
+  .product-page .product-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .product-page .product-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 480px) {
+  .product-page .product-grid { grid-template-columns: 1fr; }
+}
+
+/* ------------------- Product Card ------------------- */
+.product-page .product-card,
+.product-page .MuiCard-root {
+  width: 100%;
+  max-width: 250px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  background-color: var(--card-bg);
+  transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+  cursor: pointer;
+}
+
+.product-page .product-card:hover,
+.product-page .MuiCard-root:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--hover-shadow);
+}
+
+/* ------------------- Product Image ------------------- */
+.product-page .product-image,
+.product-page .MuiCardMedia-root {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: var(--border-radius) var(--border-radius) 0 0;
+  background-color: #f9f9f9;
+}
+
+/* ------------------- Product Info ------------------- */
+.product-page .product-info,
+.product-page .MuiCardContent-root {
+  padding: 0.75rem 1rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+/* Product Name */
+.product-page .product-info h6,
+.product-page .MuiTypography-h6 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-color);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 0.3rem;
+}
+
+/* Product Price */
+.product-page .product-card-price,
+.product-page .MuiTypography-body2 {
+  color: var(--primary-color);
+  font-size: 0.95rem;
+  margin-bottom: 0.3rem;
+}
+
+/* Product Rating */
+.product-page .product-card-rating {
+  font-size: 0.85rem;
+  color: #ff9800;
+  margin-bottom: 0.5rem;
+}
+
+/* View Details Link */
+.product-page .view-details,
+.product-page .product-card-link {
+  margin-top: auto;
+  text-decoration: none;
+  color: var(--secondary-color);
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.product-page .view-details:hover,
+.product-page .product-card-link:hover {
+  color: var(--primary-color);
+}
+
+/* ------------------- Pagination ------------------- */
+.product-page .pagination {
+  display: flex;
+  justify-content: center;
+  margin: 2rem auto;
+}
+

@@ -1,9 +1,8 @@
-// src/pages/Orders.jsx
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchOrders } from "../redux/slices/orderSlice.js";
-import { Box, Typography, Card, CardContent, Button, CircularProgress, Divider } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import "../style/orderPage.css";
 
 export default function Orders() {
   const dispatch = useDispatch();
@@ -14,46 +13,33 @@ export default function Orders() {
     dispatch(fetchOrders());
   }, [dispatch]);
 
-  if (loading) return <CircularProgress sx={{ display: "block", m: 3 }} />;
+  if (loading) return <div style={{ textAlign: "center", marginTop: "2rem" }}>Loading...</div>;
 
   if (!list.length)
-    return (
-      <Typography align="center" sx={{ mt: 5 }}>
-        No orders found ❌
-      </Typography>
-    );
+    return <div style={{ textAlign: "center", marginTop: "2rem" }}>No orders found ❌</div>;
 
   return (
-    <Box sx={{ p: 3 }}>
-      <Typography variant="h4" gutterBottom>
-        My Orders
-      </Typography>
+    <div className="orders-page">
+      <h2 className="orders-title">My Orders</h2>
 
       {list.map((order) => (
-        <Card key={order._id} sx={{ mb: 2 }}>
-          <CardContent>
-            <Typography variant="h6">Order #{order._id}</Typography>
-            <Typography variant="body2" color="text.secondary">
-              Total: ₹{order.totalPrice} | Status:{" "}
-              <strong>{order.orderStatus}</strong>
-            </Typography>
+        <div key={order._id} className="order-card">
+          <div className="order-card-content order-id">Order #{order._id}</div>
+          <div className="order-card-content order-details">
+            Total: ₹{order.totalPrice} | Status: <strong>{order.orderStatus}</strong>
+          </div>
 
-            <Divider sx={{ my: 1 }} />
+          <div className="order-divider"></div>
 
-            <Typography variant="body2">
-              {order.items.length} items | Payment: {order.paymentMethod}
-            </Typography>
+          <div className="order-card-content order-details">
+            {order.items.length} items | Payment: {order.paymentMethod}
+          </div>
 
-            <Button
-              variant="outlined"
-              sx={{ mt: 1 }}
-              onClick={() => navigate(`/orders/${order._id}`)}
-            >
-              View Details →
-            </Button>
-          </CardContent>
-        </Card>
+          <button className="order-btn" onClick={() => navigate(`/orders/${order._id}`)}>
+            View Details →
+          </button>
+        </div>
       ))}
-    </Box>
+    </div>
   );
 }

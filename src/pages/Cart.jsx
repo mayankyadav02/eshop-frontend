@@ -1,17 +1,9 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCart, removeFromCart, clearCart } from "../redux/slices/cartSlice";
-import {
-  Grid,
-  Card,
-  CardContent,
-  CardMedia,
-  Typography,
-  Button,
-  CircularProgress,
-  Box,
-} from "@mui/material";
+import { Grid, Card, CardContent, CardMedia, Typography, Button, CircularProgress, Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import "../style/cartPage.css";
 
 export default function Cart() {
   const dispatch = useDispatch();
@@ -23,72 +15,55 @@ export default function Cart() {
   }, [dispatch]);
 
   const cartItems = Array.isArray(items) ? items : items?.cartItems || [];
-
-  if (loading)
-    return <CircularProgress sx={{ display: "block", margin: "2rem auto" }} />;
-  if (error)
-    return (
-      <Typography color="error" align="center">
-        {error}
-      </Typography>
-    );
-  if (!cartItems || cartItems.length === 0)
-    return (
-      <Typography align="center" sx={{ mt: 5 }}>
-        Your cart is empty 🛒
-      </Typography>
-    );
-
   const totalPrice = cartItems.reduce(
     (acc, item) => acc + item.product.price * item.quantity,
     0
   );
 
-  return (
-    <Box sx={{ p: 3 }}>
-      <Typography variant="h4" gutterBottom>
-        Your Cart
-      </Typography>
+  if (loading) return <div className="cart-loading"><CircularProgress /></div>;
+  if (error) return <Typography className="cart-error">{error}</Typography>;
+  if (!cartItems || cartItems.length === 0)
+    return <Typography className="cart-empty">Your cart is empty 🛒</Typography>;
 
-      <Grid container spacing={3}>
+  return (
+    <div className="cart-page">
+      <div className="cart-header">
+        <Typography variant="h4">Your Cart</Typography>
+        <Button className="cart-clear-btn" onClick={async () => { await dispatch(clearCart()); dispatch(fetchCart()); }}>
+          Clear Cart
+        </Button>
+      </div>
+
+      <Grid container spacing={3} className="cart-grid">
         {cartItems.map((item) => {
           let imgUrl = "";
           try {
             const parsed = JSON.parse(item.product.images[0]);
             imgUrl = parsed[0];
           } catch (err) {
-            imgUrl = item.product.images?.[0] || "";
+            imgUrl = item.product.images?.[0] || "/placeholder.png";
           }
 
           return (
-            <Grid item xs={12} md={6} lg={4} key={item._id}>
-              <Card>
-                <CardMedia
-                  component="img"
-                  height="200"
-                  image={imgUrl || "/placeholder.png"}
-                  alt={item.product.name}
-                  sx={{ objectFit: "cover" }}
-                  onError={(e) => (e.target.src = "/placeholder.png")}
-                />
-                <CardContent>
-                  <Typography variant="h6">{item.product.name}</Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    Price: ₹{item.product.price} × {item.quantity}
+            <Grid item xs={12} sm={6} md={3} key={item._id}>
+              <Card className="cart-card">
+                <div className="cart-card-img" onClick={() => navigate(`/product/${item.product._id}`)}>
+                  <CardMedia
+                    component="img"
+                    image={imgUrl}
+                    alt={item.product.name}
+                    onError={(e) => (e.target.src = "/placeholder.png")}
+                  />
+                </div>
+                <CardContent className="cart-card-content">
+                  <Typography className="cart-product-name">{item.product.name}</Typography>
+                  <Typography className="cart-product-price">
+                    ₹{item.product.price} × {item.quantity}
                   </Typography>
-                  <Typography variant="body1" sx={{ mt: 1 }}>
+                  <Typography className="cart-product-subtotal">
                     Subtotal: ₹{item.product.price * item.quantity}
                   </Typography>
-
-                  <Button
-                    variant="outlined"
-                    color="error"
-                    sx={{ mt: 2 }}
-                    onClick={async () => {
-                      await dispatch(removeFromCart({ productId: item.product._id }));
-                      dispatch(fetchCart());
-                    }}
-                  >
+                  <Button className="cart-remove-btn" onClick={async () => { await dispatch(removeFromCart({ productId: item.product._id })); dispatch(fetchCart()); }}>
                     Remove
                   </Button>
                 </CardContent>
@@ -98,29 +73,13 @@ export default function Cart() {
         })}
       </Grid>
 
-      {/* Cart Summary */}
-      <Box sx={{ mt: 4, textAlign: "right" }}>
-        <Typography variant="h6">Total: ₹{totalPrice}</Typography>
-        <Button
-          variant="contained"
-          color="primary"
-          sx={{ mt: 2, mr: 2 }}
-          onClick={() => navigate("/checkout")}
-        >
-          Proceed to Checkout
-        </Button>
-        <Button
-          variant="contained"
-          color="error"
-          sx={{ mt: 2 }}
-          onClick={async () => {
-            await dispatch(clearCart());
-            dispatch(fetchCart());
-          }}
-        >
-          Clear Cart
-        </Button>
-      </Box>
-    </Box>
+      <div className="cart-summary">
+        <Typography variant="h6">Total Price: ₹{totalPrice}</Typography>
+        <div className="cart-summary-btns">
+          <Button className="cart-checkout-btn" onClick={() => navigate("/checkout")}>Proceed to Checkout</Button>
+          <Button className="cart-clear-btn" onClick={async () => { await dispatch(clearCart()); dispatch(fetchCart()); }}>Clear Cart</Button>
+        </div>
+      </div>
+    </div>
   );
 }

@@ -1,0 +1,162 @@
+/* ===========================
+   BASE STRUCTURE
+=========================== */
+.admin-orders-page {
+  padding: 20px;
+  min-height: 100vh;
+  transition: background 0.3s ease, color 0.3s ease;
+  font-family: "Inter", sans-serif;
+}
+
+/* Light Theme */
+.admin-orders-page.light {
+  background-color: #fafafa;
+  color: #111;
+}
+
+/* Dark Theme */
+.admin-orders-page.dark {
+  background-color: #0e0e0e;
+  color: #f5f5f5;
+}
+
+/* ===========================
+   PAGE TITLE
+=========================== */
+.page-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  transition: color 0.3s ease;
+}
+
+.admin-orders-page.light .page-title {
+  color: #111;
+}
+
+.admin-orders-page.dark .page-title {
+  color: #f9f9f9;
+}
+
+/* ===========================
+   ANALYTICS CARDS
+=========================== */
+.analytics-card {
+  border-radius: 14px;
+  text-align: center;
+  padding: 14px;
+  transition: all 0.3s ease;
+}
+
+.admin-orders-page.light .analytics-card {
+  background-color: #ffffff;
+  color: #111;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+}
+
+.admin-orders-page.dark .analytics-card {
+  background-color: #1a1a1a;
+  color: #f5f5f5;
+  box-shadow: 0 3px 8px rgba(255, 255, 255, 0.05);
+}
+
+/* ===========================
+   TABLE STYLING
+=========================== */
+.admin-table {
+  border-radius: 12px;
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+.admin-orders-page.light .admin-table {
+  background-color: #fff;
+  color: #111;
+}
+
+.admin-orders-page.light .MuiTableHead-root {
+  background-color: #eaeaea;
+}
+
+.admin-orders-page.dark .admin-table {
+  background-color: #1b1b1b;
+  color: #f5f5f5;
+}
+
+.admin-orders-page.dark .MuiTableHead-root {
+  background-color: #2a2a2a;
+}
+
+/* Table text color */
+.admin-orders-page.light .MuiTableCell-root {
+  color: #111;
+}
+
+.admin-orders-page.dark .MuiTableCell-root {
+  color: #f5f5f5;
+}
+
+/* Hover effect */
+.admin-orders-page.light .MuiTableRow-root:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.admin-orders-page.dark .MuiTableRow-root:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+/* ===========================
+   SELECT FIELD
+=========================== */
+.status-select .MuiInputBase-root {
+  border-radius: 8px;
+}
+
+.admin-orders-page.light .status-select .MuiInputBase-root {
+  background-color: #f5f5f5;
+  color: #111;
+}
+
+.admin-orders-page.dark .status-select .MuiInputBase-root {
+  background-color: #2a2a2a;
+  color: #f5f5f5;
+}
+
+/* ===========================
+   DIALOG (MODAL)
+=========================== */
+.order-dialog .MuiPaper-root {
+  border-radius: 12px;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.admin-orders-page.light .order-dialog .MuiPaper-root {
+  background-color: #fff;
+  color: #111;
+}
+
+.admin-orders-page.dark .order-dialog .MuiPaper-root {
+  background-color: #1b1b1b;
+  color: #f5f5f5;
+}
+
+/* ===========================
+   BUTTONS
+=========================== */
+.MuiButton-root {
+  border-radius: 8px !important;
+  text-transform: none !important;
+  font-weight: 500 !important;
+}
+
+/* ===========================
+   RESPONSIVE
+=========================== */
+@media (max-width: 768px) {
+  .page-title {
+    font-size: 1.4rem;
+  }
+  .analytics-card {
+    margin-bottom: 10px;
+  }
+}

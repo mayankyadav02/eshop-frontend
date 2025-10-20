@@ -1,0 +1,151 @@
+/* ===================== Theme Variables ===================== */
+:root {
+  --bg-light: #f5f5f5;
+  --card-bg-light: #ffffff;
+  --text-light: #111;
+  --shadow-light: rgba(0,0,0,0.1);
+
+  --bg-dark: #121212;
+  --card-bg-dark: #1f1f1f;
+  --text-dark: #eee;
+  --shadow-dark: rgba(255,255,255,0.08);
+
+  --primary-color: #1976d2;
+  --primary-hover: #115293;
+  --secondary-color: #dc004e;
+  --border-radius: 14px;
+  --transition-speed: 0.3s ease;
+}
+
+/* ===================== Light/Dark Mode ===================== */
+body.light {
+  --bg-color: var(--bg-light);
+  --card-bg: var(--card-bg-light);
+  --text-color: var(--text-light);
+  --shadow-color: var(--shadow-light);
+}
+
+body.dark {
+  --bg-color: var(--bg-dark);
+  --card-bg: var(--card-bg-dark);
+  --text-color: var(--text-dark);
+  --shadow-color: var(--shadow-dark);
+}
+
+/* ===================== Page Container ===================== */
+.checkout-page {
+  min-height: 100vh;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color var(--transition-speed), color var(--transition-speed);
+  padding: 2rem;
+}
+
+/* ===================== Section Titles ===================== */
+.checkout-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  text-align: center;
+  color: var(--primary-color);
+}
+
+.checkout-subtitle {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--text-color);
+}
+
+/* ===================== Cards ===================== */
+.checkout-card {
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  border-radius: var(--border-radius);
+  box-shadow: 0 4px 15px var(--shadow-color);
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+  transition: all var(--transition-speed);
+}
+
+.checkout-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px var(--shadow-color);
+}
+
+/* ===================== Card Content ===================== */
+.checkout-card-content {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+}
+
+.checkout-card-content img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-right: 1rem;
+}
+
+/* ===================== Inputs ===================== */
+.checkout-input {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.checkout-input input,
+.checkout-input textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: var(--border-radius);
+  border: 1px solid #ccc;
+  background: transparent;
+  color: var(--text-color);
+  font-size: 1rem;
+  transition: all var(--transition-speed);
+}
+
+.checkout-input input:focus,
+.checkout-input textarea:focus {
+  border-color: var(--primary-color);
+  outline: none;
+  box-shadow: 0 0 5px var(--primary-color);
+}
+
+/* ===================== Buttons ===================== */
+.checkout-btn {
+  width: 100%;
+  padding: 12px 0;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: var(--border-radius);
+  border: none;
+  cursor: pointer;
+  color: #fff;
+  background-color: var(--primary-color);
+  transition: all var(--transition-speed);
+  margin-top: 1rem;
+}
+
+.checkout-btn:hover {
+  background-color: var(--primary-hover);
+  transform: scale(1.03);
+}
+
+.checkout-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* ===================== Responsive ===================== */
+@media (max-width: 768px) {
+  .checkout-card-content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .checkout-card-content img {
+    margin-bottom: 0.5rem;
+  }
+}

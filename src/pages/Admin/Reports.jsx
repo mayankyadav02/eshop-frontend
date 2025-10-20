@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import {
   Box,
   Typography,
@@ -16,9 +16,14 @@ import {
 } from "@mui/material";
 import axios from "../../api/axios";
 import useAuth from "../../hooks/useAuth";
+import { ThemeContext } from "../../context/ThemeContext";
+
+import "../../style/Admin/report.css";
 
 export default function AdminReports() {
   const { token } = useAuth();
+  const { theme } = useContext(ThemeContext);
+
   const [loading, setLoading] = useState(true);
   const [salesByCategory, setSalesByCategory] = useState([]);
   const [orderStatusCounts, setOrderStatusCounts] = useState([]);
@@ -57,26 +62,26 @@ export default function AdminReports() {
   if (loading) return <CircularProgress />;
 
   return (
-    <Box>
-      <Typography variant="h5" gutterBottom>
+    <div className={`admin-reports-page ${theme}`}>
+      <Typography variant="h5" gutterBottom className="page-title">
         Admin Reports
       </Typography>
 
       {/* 🗂 Summary Cards */}
-      <Grid container spacing={2} sx={{ mb: 3 }}>
+      <Grid container spacing={2}>
         <Grid item xs={12} sm={4}>
-          <Card>
+          <Card className="report-card">
             <CardContent>
-              <Typography>Total Categories</Typography>
+              <Typography className="card-title">Total Categories</Typography>
               <Typography variant="h6">{salesByCategory.length}</Typography>
             </CardContent>
           </Card>
         </Grid>
 
         <Grid item xs={12} sm={4}>
-          <Card>
+          <Card className="report-card">
             <CardContent>
-              <Typography>Total Orders</Typography>
+              <Typography className="card-title">Total Orders</Typography>
               <Typography variant="h6">
                 {orderStatusCounts.reduce((acc, o) => acc + o.count, 0)}
               </Typography>
@@ -85,9 +90,9 @@ export default function AdminReports() {
         </Grid>
 
         <Grid item xs={12} sm={4}>
-          <Card>
+          <Card className="report-card">
             <CardContent>
-              <Typography>Pending Orders</Typography>
+              <Typography className="card-title">Pending Orders</Typography>
               <Typography variant="h6">
                 {orderStatusCounts.find((o) => o.status === "Pending")?.count || 0}
               </Typography>
@@ -97,12 +102,12 @@ export default function AdminReports() {
       </Grid>
 
       {/* 📝 Sales by Category Table */}
-      <Typography variant="h6" sx={{ mt: 2, mb: 1 }}>
+      <Typography variant="h6" className="table-title">
         Sales by Category
       </Typography>
-      <TableContainer component={Paper} sx={{ mb: 3 }}>
+      <TableContainer component={Paper} className="report-table">
         <Table>
-          <TableHead sx={{ background: "#f0f0f0" }}>
+          <TableHead>
             <TableRow>
               <TableCell>Category</TableCell>
               <TableCell>Total Sales</TableCell>
@@ -122,12 +127,12 @@ export default function AdminReports() {
       </TableContainer>
 
       {/* 📝 Top Products Table */}
-      <Typography variant="h6" sx={{ mt: 2, mb: 1 }}>
+      <Typography variant="h6" className="table-title">
         Top Products
       </Typography>
-      <TableContainer component={Paper}>
+      <TableContainer component={Paper} className="report-table">
         <Table>
-          <TableHead sx={{ background: "#f0f0f0" }}>
+          <TableHead>
             <TableRow>
               <TableCell>Product Name</TableCell>
               <TableCell>Brand</TableCell>
@@ -147,6 +152,6 @@ export default function AdminReports() {
           </TableBody>
         </Table>
       </TableContainer>
-    </Box>
+    </div>
   );
 }

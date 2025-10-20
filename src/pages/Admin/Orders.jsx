@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import {
   Box,
   Typography,
@@ -23,19 +23,20 @@ import {
 } from "@mui/material";
 import axios from "../../api/axios";
 import useAuth from "../../hooks/useAuth";
+import { ThemeContext } from "../../context/ThemeContext";
+import "../../style/Admin/order.css";
 
-export default function AdminDashboard() {
+export default function AdminOrders() {
   const { token } = useAuth();
+  const { theme } = useContext(ThemeContext);
 
   const [orders, setOrders] = useState([]);
   const [analytics, setAnalytics] = useState({});
   const [selectedOrder, setSelectedOrder] = useState(null);
-
-  // Pagination
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
-  // Fetch Orders
+  // ✅ Fetch orders
   const fetchOrders = async () => {
     try {
       const res = await axios.get("/api/admin/orders", {
@@ -47,7 +48,7 @@ export default function AdminDashboard() {
     }
   };
 
-  // Fetch Analytics
+  // ✅ Fetch analytics
   const fetchAnalytics = async () => {
     try {
       const res = await axios.get("/api/admin/summary", {
@@ -59,7 +60,7 @@ export default function AdminDashboard() {
     }
   };
 
-  // Update Order Status
+  // ✅ Update order status
   const handleStatusChange = async (id, status) => {
     try {
       await axios.put(
@@ -73,6 +74,7 @@ export default function AdminDashboard() {
     }
   };
 
+  // ✅ Deliver order
   const handleDeliver = async (id) => {
     try {
       await axios.put(
@@ -86,6 +88,7 @@ export default function AdminDashboard() {
     }
   };
 
+  // ✅ Approve return
   const handleApproveReturn = async (id) => {
     try {
       await axios.put(
@@ -107,44 +110,33 @@ export default function AdminDashboard() {
   }, [token]);
 
   return (
-    <Box>
-      <Typography variant="h5" gutterBottom>
-        Order Dashboard
+    <Box className={`admin-orders-page ${theme}`}>
+      <Typography variant="h5" className="page-title">
+        Admin Orders
       </Typography>
 
       {/* 📊 Analytics Summary */}
-      <Grid container spacing={2} sx={{ mb: 3 }}>
-        <Grid item xs={12} sm={6} md={3}>
-          <Card>
-            <CardContent>
-              <Typography>Total Orders</Typography>
-              <Typography variant="h6">{analytics.totalOrders || 0}</Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
-          <Card>
-            <CardContent>
-              <Typography>Pending Orders</Typography>
-              <Typography variant="h6">{analytics.pendingOrders || 0}</Typography>
-            </CardContent>
-          </Card>
-              </Grid>
-                      <Grid item xs={12} sm={6} md={3}>
-          <Card>
-            <CardContent>
-              <Typography>Delivered Orders</Typography>
-              <Typography variant="h6">{analytics.deliveredOrders || 0}</Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-
+      <Grid container spacing={2}>
+        {[
+          { label: "Total Orders", value: analytics.totalOrders || 0 },
+          { label: "Pending Orders", value: analytics.pendingOrders || 0 },
+          { label: "Delivered Orders", value: analytics.deliveredOrders || 0 },
+        ].map((item, index) => (
+          <Grid item xs={12} sm={6} md={3} key={index}>
+            <Card className={`analytics-card ${theme}`}>
+              <CardContent>
+                <Typography>{item.label}</Typography>
+                <Typography variant="h6">{item.value}</Typography>
+              </CardContent>
+            </Card>
           </Grid>
+        ))}
+      </Grid>
 
       {/* 📋 Orders Table */}
-      <TableContainer component={Paper}>
+      <TableContainer component={Paper} className="admin-table">
         <Table>
-          <TableHead sx={{ background: "#f0f0f0" }}>
+          <TableHead>
             <TableRow>
               <TableCell>Order ID</TableCell>
               <TableCell>User</TableCell>
@@ -155,52 +147,38 @@ export default function AdminDashboard() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {orders
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((o) => (
-                <TableRow key={o._id}>
-                  <TableCell>{o._id}</TableCell>
-                  <TableCell>{o.user?.email}</TableCell>
-                  <TableCell>₹{o.totalPrice}</TableCell>
-                  <TableCell>
-                    <TextField
-                      select
-                      value={o.orderStatus}
-                      onChange={(e) => handleStatusChange(o._id, e.target.value)}
-                      size="small"
-                      style={{ width: "120px" }}
-                    >
-                      {["Pending", "Processing", "Shipped", "Delivered"].map(
-                        (status) => (
-                          <MenuItem key={status} value={status}>
-                            {status}
-                          </MenuItem>
-                        )
-                      )}
-                    </TextField>
-                  </TableCell>
-                  <TableCell>{new Date(o.createdAt).toLocaleDateString()}</TableCell>
-                  <TableCell>
-                    <Button size="small" onClick={() => setSelectedOrder(o)}>
-                      View
-                    </Button>
-                    <Button
-                      size="small"
-                      onClick={() => handleDeliver(o._id)}
-                      color="success"
-                    >
-                      Deliver
-                    </Button>
-                    <Button
-                      size="small"
-                      onClick={() => handleApproveReturn(o._id)}
-                      color="error"
-                    >
-                      Approve Return
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              ))}
+            {orders.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((o) => (
+              <TableRow key={o._id}>
+                <TableCell>{o._id}</TableCell>
+                <TableCell>{o.user?.email}</TableCell>
+                <TableCell>₹{o.totalPrice}</TableCell>
+                <TableCell>
+                  <TextField
+                    select
+                    value={o.orderStatus}
+                    onChange={(e) => handleStatusChange(o._id, e.target.value)}
+                    size="small"
+                    className="status-select"
+                  >
+                    {["Pending", "Processing", "Shipped", "Delivered"].map((s) => (
+                      <MenuItem key={s} value={s}>
+                        {s}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                </TableCell>
+                <TableCell>{new Date(o.createdAt).toLocaleDateString()}</TableCell>
+                <TableCell>
+                  <Button onClick={() => setSelectedOrder(o)}>View</Button>
+                  <Button color="success" onClick={() => handleDeliver(o._id)}>
+                    Deliver
+                  </Button>
+                  <Button color="error" onClick={() => handleApproveReturn(o._id)}>
+                    Approve Return
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
       </TableContainer>
@@ -218,12 +196,13 @@ export default function AdminDashboard() {
         rowsPerPageOptions={[10, 20, 50]}
       />
 
-      {/* 🔎 Order Details Modal */}
+      {/* 🔎 Order Details Dialog */}
       <Dialog
         open={!!selectedOrder}
         onClose={() => setSelectedOrder(null)}
         fullWidth
         maxWidth="md"
+        className={`order-dialog ${theme}`}
       >
         <DialogTitle>Order Details</DialogTitle>
         <DialogContent>

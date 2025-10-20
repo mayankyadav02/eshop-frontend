@@ -1,7 +1,12 @@
+// src/components/AdminSidebar/AdminSidebar.jsx
+import React, { useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { ThemeContext } from "../../context/ThemeContext.jsx";
+import "./AdminSidebar.css";
 
 const AdminSidebar = () => {
   const { pathname } = useLocation();
+  const { theme } = useContext(ThemeContext);
 
   const links = [
     { to: "/admin/dashboard", label: "Dashboard" },
@@ -12,15 +17,17 @@ const AdminSidebar = () => {
   ];
 
   return (
-    <aside className="w-64 bg-white shadow-md min-h-screen p-4">
-      <h2 className="text-xl font-bold mb-6">Admin Panel</h2>
-      <nav className="space-y-3">
+    <aside
+      className={`admin-sidebar ${theme === "dark" ? "dark-mode" : "light-mode"}`}
+    >
+      <h2 className="sidebar-title">Admin Panel</h2>
+      <nav className="sidebar-nav">
         {links.map((link) => (
           <Link
             key={link.to}
             to={link.to}
-            className={`block p-2 rounded-md ${
-              pathname === link.to ? "bg-blue-500 text-white" : "hover:bg-gray-200"
+            className={`sidebar-link ${
+              pathname === link.to ? "active" : ""
             }`}
           >
             {link.label}

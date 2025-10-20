@@ -1,20 +1,10 @@
-// src/pages/OrderDetails.jsx
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "../api/axios.js";
-import {
-  Box,
-  Typography,
-  Card,
-  CardContent,
-  CircularProgress,
-  Button,
-  Divider,
-  TextField,
-} from "@mui/material";
+import "../style/orderDetailPage.css";
 
 export default function OrderDetails() {
-  const { id } = useParams(); // order id from URL
+  const { id } = useParams();
   const navigate = useNavigate();
   const [order, setOrder] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -26,7 +16,6 @@ export default function OrderDetails() {
     const fetchOrder = async () => {
       try {
         const { data } = await axios.get(`/api/orders/${id}`);
-        console.log("Order Details:", data);
         setOrder(data);
       } catch (err) {
         console.error(err);
@@ -38,15 +27,13 @@ export default function OrderDetails() {
     fetchOrder();
   }, [id]);
 
-  // Cancel order
   const handleCancelOrder = async () => {
     if (!window.confirm("Are you sure you want to cancel this order? ❌")) return;
-
     try {
       setCanceling(true);
       const { data } = await axios.put(`/api/orders/${id}/cancel`);
       alert("Order cancelled successfully ✅");
-      setOrder(data); // update UI with cancelled order
+      setOrder(data);
     } catch (err) {
       console.error(err);
       alert("Failed to cancel order!");
@@ -55,20 +42,17 @@ export default function OrderDetails() {
     }
   };
 
-  // Request return
   const handleReturnRequest = async () => {
     if (!reason.trim()) {
       alert("Please provide a reason for return.");
       return;
     }
-
     if (!window.confirm("Do you want to request a return for this order? 🔄")) return;
-
     try {
       setReturning(true);
       const { data } = await axios.put(`/api/orders/${id}/return`, { reason });
       alert("Return request submitted ✅");
-      setOrder(data.order); // update with updated order info
+      setOrder(data.order);
     } catch (err) {
       console.error(err);
       alert(err.response?.data?.message || "Failed to request return!");
@@ -78,134 +62,77 @@ export default function OrderDetails() {
   };
 
   if (loading)
-    return <CircularProgress sx={{ display: "block", margin: "2rem auto" }} />;
+    return <div style={{ textAlign: "center", marginTop: "2rem" }}>Loading...</div>;
 
   if (!order)
-    return (
-      <Typography align="center" sx={{ mt: 5 }}>
-        Order not found ❌
-      </Typography>
-    );
+    return <div style={{ textAlign: "center", marginTop: "2rem" }}>Order not found ❌</div>;
 
   return (
-    <Box sx={{ p: 3 }}>
-      <Button variant="outlined" onClick={() => navigate("/orders")}>
+    <div className="order-page">
+      <button className="order-btn order-btn-outlined" onClick={() => navigate("/orders")}>
         ← Back to Orders
-      </Button>
+      </button>
 
-      <Typography variant="h4" gutterBottom sx={{ mt: 2 }}>
-        Order Details
-      </Typography>
+      <h2 className="order-title">Order Details</h2>
 
-      <Card>
-        <CardContent>
-          <Typography variant="h6">Order ID: {order._id}</Typography>
-          <Typography variant="body2" color="text.secondary">
-            Total: ₹{order.totalPrice} | Payment:{" "}
-            {order.paymentMethod || "Pending"} | Status:{" "}
-            <strong>{order.orderStatus || "Processing"}</strong>
-          </Typography>
+      <div className="order-card">
+        <div className="order-card-content">
+          <strong>Order ID:</strong> {order._id}
+        </div>
+        <div className="order-card-content">
+          <span>Total: ₹{order.totalPrice} | Payment: {order.paymentMethod || "Pending"} | Status: <strong>{order.orderStatus || "Processing"}</strong></span>
+        </div>
 
-          <Divider sx={{ my: 2 }} />
+        <hr />
 
-          <Typography variant="subtitle1">Shipping Details</Typography>
-          <Typography variant="body2">
-            {order.shippingAddress?.fullName}
-          </Typography>
-          <Typography variant="body2">
-            {order.shippingAddress?.addressLine}
-          </Typography>
-          <Typography variant="body2">
-            {order.shippingAddress?.city}, {order.shippingAddress?.state} -{" "}
-            {order.shippingAddress?.zip}
-          </Typography>
-          <Typography variant="body2">
-            {order.shippingAddress?.phone}
-          </Typography>
+        <h4 className="order-subtitle">Shipping Details</h4>
+        <p>{order.shippingAddress?.fullName}</p>
+        <p>{order.shippingAddress?.addressLine}</p>
+        <p>{order.shippingAddress?.city}, {order.shippingAddress?.state} - {order.shippingAddress?.zip}</p>
+        <p>{order.shippingAddress?.phone}</p>
+        <p>{order.shippingAddress?.email}</p>
 
-          <Divider sx={{ my: 2 }} />
+        <hr />
 
-          <Typography variant="subtitle1">Products</Typography>
-          {order.items.map((item, idx) => (
-            <Box
-              key={idx}
-              sx={{ display: "flex", alignItems: "center", my: 1 }}
-            >
-              <img
-                src={item.product?.image || "/placeholder.png"}
-                alt={item.product?.name}
-                style={{
-                  width: 60,
-                  height: 60,
-                  objectFit: "cover",
-                  marginRight: 10,
-                }}
-              />
-              <Box>
-                <Typography variant="body2">
-                  {item.product?.name || "Product"}
-                </Typography>
-                <Typography variant="body2">
-                  ₹{item.price} × {item.quantity}
-                </Typography>
-              </Box>
-            </Box>
-          ))}
+        <h4 className="order-subtitle">Products</h4>
+        {order.items.map((item, idx) => (
+          <div key={idx} className="order-card-content">
+            <img src={item.product?.image || "/placeholder.png"} alt={item.product?.name} />
+            <div>
+              <p>{item.product?.name || "Product"}</p>
+              <p>₹{item.price} × {item.quantity}</p>
+            </div>
+          </div>
+        ))}
 
-          {/* Cancel Button */}
-          {order.orderStatus === "Processing" && (
-            <Button
-              variant="outlined"
-              color="error"
-              size="small"
-              sx={{ mt: 2 }}
-              disabled={canceling}
-              onClick={handleCancelOrder}
-            >
-              {canceling ? "Cancelling..." : "Cancel Order"}
-            </Button>
-          )}
+        {order.orderStatus === "Processing" && (
+          <button className="order-btn order-btn-cancel" disabled={canceling} onClick={handleCancelOrder}>
+            {canceling ? "Cancelling..." : "Cancel Order"}
+          </button>
+        )}
 
-          {order.orderStatus === "Cancelled" && (
-            <Typography color="error" sx={{ mt: 2 }}>
-              This order is cancelled ❌
-            </Typography>
-          )}
+        {order.orderStatus === "Cancelled" && (
+          <p style={{ color: "red", marginTop: "1rem" }}>This order is cancelled ❌</p>
+        )}
 
-          {/* Return Request Section */}
-          {order.orderStatus === "Delivered" && !order.returnRequested && (
-            <Box sx={{ mt: 3 }}>
-              <Typography variant="subtitle1" gutterBottom>
-                Request a Return
-              </Typography>
-              <TextField
-                fullWidth
-                multiline
-                minRows={2}
-                placeholder="Enter reason for return"
-                value={reason}
-                onChange={(e) => setReason(e.target.value)}
-              />
-              <Button
-                variant="outlined"
-                color="warning"
-                size="small"
-                sx={{ mt: 2 }}
-                disabled={returning}
-                onClick={handleReturnRequest}
-              >
-                {returning ? "Submitting..." : "Request Return"}
-              </Button>
-            </Box>
-          )}
+        {order.orderStatus === "Delivered" && !order.returnRequested && (
+          <div style={{ marginTop: "1.5rem" }}>
+            <h4 className="order-subtitle">Request a Return</h4>
+            <div className="order-input">
+              <textarea rows={2} placeholder="Enter reason for return" value={reason} onChange={(e) => setReason(e.target.value)} />
+            </div>
+            <button className="order-btn order-btn-return" disabled={returning} onClick={handleReturnRequest}>
+              {returning ? "Submitting..." : "Request Return"}
+            </button>
+          </div>
+        )}
 
-          {order.returnRequested && (
-            <Typography color="warning.main" sx={{ mt: 2 }}>
-              ✅ Return requested for this order. Reason: {order.returnReason}
-            </Typography>
-          )}
-        </CardContent>
-      </Card>
-    </Box>
+        {order.returnRequested && (
+          <p style={{ color: "orange", marginTop: "1rem" }}>
+            ✅ Return requested for this order. Reason: {order.returnReason}
+          </p>
+        )}
+      </div>
+    </div>
   );
 }

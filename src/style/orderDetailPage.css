@@ -1,0 +1,172 @@
+/* ===================== Theme Variables ===================== */
+:root {
+  --bg-light: #f5f5f5;
+  --card-bg-light: #ffffff;
+  --text-light: #111;
+  --shadow-light: rgba(0,0,0,0.1);
+
+  --bg-dark: #121212;
+  --card-bg-dark: #1f1f1f;
+  --text-dark: #eee;
+  --shadow-dark: rgba(255,255,255,0.08);
+
+  --primary-color: #1976d2;
+  --primary-hover: #115293;
+  --secondary-color: #dc004e;
+  --border-radius: 14px;
+  --transition-speed: 0.3s ease;
+}
+
+/* ===================== Light/Dark Mode ===================== */
+body.light {
+  --bg-color: var(--bg-light);
+  --card-bg: var(--card-bg-light);
+  --text-color: var(--text-light);
+  --shadow-color: var(--shadow-light);
+}
+
+body.dark {
+  --bg-color: var(--bg-dark);
+  --card-bg: var(--card-bg-dark);
+  --text-color: var(--text-dark);
+  --shadow-color: var(--shadow-dark);
+}
+
+/* ===================== Page Container ===================== */
+.order-page {
+  min-height: 100vh;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color var(--transition-speed), color var(--transition-speed);
+  padding: 2rem;
+}
+
+/* ===================== Titles ===================== */
+.order-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  color: var(--primary-color);
+  text-align: center;
+}
+
+.order-subtitle {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--text-color);
+}
+
+/* ===================== Card ===================== */
+.order-card {
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  border-radius: var(--border-radius);
+  box-shadow: 0 4px 15px var(--shadow-color);
+  overflow: hidden;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  transition: all var(--transition-speed);
+}
+
+.order-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px var(--shadow-color);
+}
+
+/* ===================== Card Content ===================== */
+.order-card-content {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.8rem;
+}
+
+.order-card-content img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-right: 1rem;
+}
+
+/* ===================== Buttons ===================== */
+.order-btn {
+  padding: 10px 0;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: var(--border-radius);
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  transition: all var(--transition-speed);
+  margin-top: 1rem;
+}
+
+.order-btn-outlined {
+  background: transparent;
+  border: 2px solid var(--primary-color);
+  color: var(--primary-color);
+}
+
+.order-btn-outlined:hover {
+  background-color: var(--primary-color);
+  color: #fff;
+  transform: scale(1.03);
+}
+
+.order-btn-cancel {
+  background-color: var(--secondary-color);
+  color: #fff;
+}
+
+.order-btn-cancel:hover {
+  background-color: #9a0036;
+  transform: scale(1.03);
+}
+
+.order-btn-return {
+  background-color: orange;
+  color: #fff;
+}
+
+.order-btn-return:hover {
+  background-color: darkorange;
+  transform: scale(1.03);
+}
+
+/* ===================== Inputs ===================== */
+.order-input {
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+.order-input input,
+.order-input textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: var(--border-radius);
+  border: 1px solid #ccc;
+  background: transparent;
+  color: var(--text-color);
+  font-size: 1rem;
+  transition: all var(--transition-speed);
+}
+
+.order-input input:focus,
+.order-input textarea:focus {
+  border-color: var(--primary-color);
+  outline: none;
+  box-shadow: 0 0 5px var(--primary-color);
+}
+
+/* ===================== Responsive ===================== */
+@media (max-width: 768px) {
+  .order-card-content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .order-card-content img {
+    margin-bottom: 0.5rem;
+  }
+}

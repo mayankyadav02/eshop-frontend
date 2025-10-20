@@ -1,0 +1,165 @@
+/* ===================== Theme Variables ===================== */
+:root {
+  --bg-light: #f5f5f5;
+  --card-bg-light: #ffffff;
+  --text-light: #111;
+  --shadow-light: rgba(0,0,0,0.1);
+
+  --bg-dark: #121212;
+  --card-bg-dark: #1f1f1f;
+  --text-dark: #eee;
+  --shadow-dark: rgba(255,255,255,0.08);
+
+  --primary-color: #1976d2;
+  --primary-hover: #115293;
+  --secondary-color: #dc004e;
+  --border-radius: 14px;
+  --transition-speed: 0.3s ease;
+}
+
+/* ===================== Light/Dark Mode ===================== */
+body.light {
+  --bg-color: var(--bg-light);
+  --card-bg: var(--card-bg-light);
+  --text-color: var(--text-light);
+  --shadow-color: var(--shadow-light);
+}
+
+body.dark {
+  --bg-color: var(--bg-dark);
+  --card-bg: var(--card-bg-dark);
+  --text-color: var(--text-dark);
+  --shadow-color: var(--shadow-dark);
+}
+
+/* ===================== Page Container ===================== */
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color var(--transition-speed), color var(--transition-speed);
+}
+
+/* ===================== Auth Card ===================== */
+.auth-card {
+  width: 100%;
+  max-width: 420px;
+  padding: 3rem 2rem;
+  border-radius: var(--border-radius);
+  background-color: var(--card-bg);
+  box-shadow: 0 6px 20px var(--shadow-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: all var(--transition-speed);
+}
+
+.auth-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px var(--shadow-color);
+}
+
+/* ===================== Heading ===================== */
+.auth-title {
+  text-align: center;
+  color: var(--primary-color);
+  margin-bottom: 2rem !important;
+  transition: color var(--transition-speed);
+}
+.auth-title.MuiTypography-root {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+
+/* ===================== Inputs ===================== */
+.auth-input {
+  width: 100% ;
+  margin-bottom: 1.2rem ;
+}
+
+.auth-input input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: var(--border-radius);
+  border: 1px solid #ccc;
+  background: transparent;
+  color: var(--text-color);
+  font-size: 1rem;
+  transition: all var(--transition-speed);
+}
+
+.auth-input input:focus {
+  border-color: var(--primary-color);
+  outline: none;
+  box-shadow: 0 0 5px var(--primary-color);
+}
+
+/* ===================== Buttons ===================== */
+.auth-btn {
+  width: 100% !important;
+  padding: 12px 0 !important;
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+  border-radius: var(--border-radius) !important;
+  border: none !important;
+  cursor: pointer !important;
+  color: #fff !important;
+  background-color: var(--primary-color) !important;
+  transition: all var(--transition-speed) !important;
+  margin-top: 0.5rem !important;
+}
+
+.auth-btn:hover {
+  background-color: var(--primary-hover) !important;
+  transform: scale(1.03) !important;
+}
+
+.auth-btn:disabled {
+  opacity: 0.7 !important;
+  cursor: not-allowed !important;
+}
+
+/* ===================== Footer Links ===================== */
+.auth-footer {
+  text-align: center !important;
+  margin-top: 1.5rem !important;
+  font-size: 0.95rem !important;
+}
+
+.auth-footer button {
+  background: none;
+  border: none;
+  color: var(--secondary-color);
+  font-weight: 600;
+  cursor: pointer;
+  transition: color var(--transition-speed);
+}
+
+.auth-footer button:hover {
+  color: #9a0036;
+}
+
+/* ===================== Alert ===================== */
+.MuiAlert-root {
+  margin-bottom: 1rem ;
+  font-size: 0.95rem ;
+  border-radius: var(--border-radius);
+}
+
+/* ===================== Responsive ===================== */
+@media (max-width: 480px) {
+  .auth-card {
+    padding: 2rem 1.5rem;
+    border-radius: 12px;
+  }
+
+  .auth-title {
+    font-size: 1.7rem;
+  }
+}
