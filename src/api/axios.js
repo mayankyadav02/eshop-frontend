@@ -1,30 +1,3 @@
-// // src/api/axios.js
-// import axios from "axios";
-
-// const instance = axios.create({
-//   baseURL: "http://localhost:5000",
-//   withCredentials: true,
-// });
-
-// instance.interceptors.request.use((config) => {
-//   try {
-//     const userInfo = localStorage.getItem("userInfo");
-//     if (userInfo) {
-//       const { token } = JSON.parse(userInfo);  // 🔥 token extract yahan se
-//       if (token) {
-//         config.headers.Authorization = `Bearer ${token}`;
-//       }
-//     }
-//   } catch (err) {
-//     console.error("Token parse error", err);
-//   }
-//   return config;
-// });
-
-// export default instance;
-
-
-// src/api/axios.js
 import axios from "axios";
 
 // ✅ Base URL from environment variable
