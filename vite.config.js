@@ -7,11 +7,6 @@ export default defineConfig({
   server: {
     port: 3000,
   },
-  build: {
-    outDir: 'dist',
-  },
-  preview: {
-    port: 5000,
-  },
-  base: '/',
-});
+proxy: {
+    '/api': 'http://localhost:5000'
+  }});
