@@ -1,5 +1,12 @@
 {
   "rewrites": [
     { "source": "/(.*)", "destination": "/" }
+  ],
+  "redirects": [
+    {
+      "source": "/api/(.*)",
+      "destination": "https://eshop-backend-2-xnbg.onrender.com/api/$1",
+      "permanent": true
+    }
   ]
 }
