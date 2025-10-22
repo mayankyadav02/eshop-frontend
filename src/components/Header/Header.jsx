@@ -75,7 +75,7 @@ const Header = () => {
   {/* Left */}
   <Box className="header-left">
     <Link to="/">
-      <Box component="img" src="assets/eshopLogo.png" alt="eshop logo" />
+      <Box component="img" src="/eshopLogo.png" alt="eshop logo" />
     </Link>
     <Button color="inherit" component={Link} to="/products">
       Products
