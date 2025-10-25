@@ -13,13 +13,13 @@ export default function CategoryPage() {
     const fetchCategory = async () => {
       try {
         setLoading(true);
-        const res = await fetch(`http://localhost:5000/api/categories/${idOrSlug}`);
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/categories/${idOrSlug}`);
         const data = await res.json();
         setCategory(data);
 
         // fetch products of this category
         const prodRes = await fetch(
-          `http://localhost:5000/api/products?category=${data._id}`
+          `${import.meta.env.VITE_API_URL}/api/products?category=${data._id}`
         );
         const prodData = await prodRes.json();
         setProducts(prodData);
