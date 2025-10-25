@@ -38,7 +38,7 @@ export default function ProductDetail() {
 
   const fetchReviews = async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/reviews/${id}`);
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/reviews/${id}`);
       setReviews(res.data || []);
     } catch (err) {
       console.error("Reviews fetch error:", err);
@@ -54,7 +54,7 @@ export default function ProductDetail() {
     }
     try {
       await axios.post(
-        "http://localhost:5000/api/reviews",
+        `${import.meta.env.VITE_API_URL}/api/reviews`,
         { productId: id, rating, comment },
         { headers: { Authorization: `Bearer ${userInfo.token}` } }
       );

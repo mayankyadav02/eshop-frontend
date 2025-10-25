@@ -35,14 +35,14 @@ export default function Home() {
   };
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/categories")
+    fetch(`${import.meta.env.VITE_API_URL}/api/categories`)
       .then((res) => res.json())
       .then((data) => setCategories(data))
       .catch((err) => console.error(err));
   }, []);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/products?top=true")
+    fetch(`${import.meta.env.VITE_API_URL}/api/products?top=true`)
       .then((res) => res.json())
       .then((data) => {
         setTopProducts(data.products || []);
@@ -69,7 +69,7 @@ export default function Home() {
     if (selectedCategory) params.append("category", selectedCategory);
     if (sortOption) params.append("sortBy", sortOption);
 
-    fetch(`http://localhost:5000/api/products?${params.toString()}`)
+    fetch(`${import.meta.env.VITE_API_URL}/api/products?${params.toString()}`)
       .then((res) => res.json())
       .then((data) => {
         setFilteredProducts(data.products || []);
