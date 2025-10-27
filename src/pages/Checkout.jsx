@@ -59,7 +59,7 @@ export default function Checkout() {
           {cartItems.map((item) => (
             <div key={item._id} className="checkout-card">
               <div className="checkout-card-content">
-                <img src={item.product.images?.[0] || "/placeholder.png"} alt={item.product.name} />
+                <img src={item.product.images?.[0] || "/placeholder.png"} alt={item.product.name} onError={(e) => (e.target.src = "/placeholder.png")}/>
                 <div>
                   <p>{item.product.name}</p>
                   <p>₹{item.product.price} × {item.quantity} = ₹{item.product.price * item.quantity}</p>
