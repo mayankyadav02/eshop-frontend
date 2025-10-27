@@ -174,7 +174,7 @@ export default function Products() {
                   alt={title}
                   className="product-image"
                   onClick={() => window.location.assign(`/product/${p._id}`)}
-                  onError={(e) => (e.target.src = "/placeholder.png")}
+                  onError={(e) => (e.target.src = `${import.meta.env.BASE_URL}placeholder.png`)}
                 />
                 <CardContent className="product-info">
                   <Typography variant="h6" noWrap>

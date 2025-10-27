@@ -102,7 +102,7 @@ export default function ProductDetail() {
       src={imgUrl}
       alt={product.name}
       className="product-image"
-      onError={(e) => (e.target.src = "/placeholder.png")}
+      onError={(e) => (e.target.src = `${import.meta.env.BASE_URL}placeholder.png`)}
     />
   </div>
 

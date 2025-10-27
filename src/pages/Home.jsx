@@ -120,7 +120,12 @@ export default function Home() {
             const title = p.product_name || p.name || "Unnamed Product";
             return (
               <div className="product-card" key={p._id}>
-                <img src={imgUrl} alt={title} onClick={() => window.location.assign(`/product/${p._id}`)} />
+                <img
+                  src={imgUrl}
+                  alt={title}
+                  onClick={() => window.location.assign(`/product/${p._id}`)}
+                  onError={(e) => (e.target.src = `${import.meta.env.BASE_URL}placeholder.png`)}
+                />
                 <div className="product-card-content">
                   <div className="product-card-title">{title}</div>
                   <div className="product-card-price">₹{p.price}</div>
